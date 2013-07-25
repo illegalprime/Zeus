@@ -1,0 +1,49 @@
+name: Zeus
+main: net.illegalprime.zeus.Zeus
+version: 2.0.0
+commands:
+   zeus:
+      description: Strike location with lightning.
+      usage: /zeus
+      permission: zeus.zeus
+      permission-message: You don't have permission to use [ <permission> ].
+   jail:
+      description: Sends selected players to jail.
+      usage: /jail <player> (<jail>)
+      permission: zeus.jail
+      permission-message: You don't have permission to use [ <permission> ].
+   jailtime:
+      description: Gets the remaining jail time of the sender.
+      usage: /jailtime
+      permission: zeus.jailtime
+      permission-message: You don't have permission to use [ <permission> ].
+   autosave:
+      description: Sets the interval of autosave, in minutes.
+      usage: /autosave
+      permission: zeus.autosave
+      permission-message: You don't have permission to use [ <permission> ].
+   invite:
+      description: Invites players to teleport to your location.
+      usage: /invite <player name>
+      permission: zeus.invite
+      permission-message: You don't have permission to use [ <permission> ].
+   goto:
+      description: Accept a request from a player sent by the invite command.
+      usage: /goto
+      permission: zeus.goto
+      permission-message: You don't have permission to use [ <permission> ].
+   tactical:
+      description: Place a Tactical Insertion at your location.
+      usage: /tactical (view)
+      permission: zeus.tactical
+      permission-message: You don't have permission to use [ <permission> ].
+   regionedit:
+      description: Perform a WorldEdit command on a WorldGuard Region.
+      usage: /regionedit <region id> <command>
+      permission: zeus.regionedit
+      permission-message: You don't have permission to use [ <permission> ].
+   book:
+      description: Run the command written in the book in your hand.
+      usage: /book
+      permission: zeus.book
+      permission-message: You don't have permission to use [ <permission> ].

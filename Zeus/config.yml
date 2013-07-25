@@ -1,0 +1,12 @@
+autosaveTime: 30
+ZeusJail:
+  dJail: nonexistent
+  dTime: 10
+  dMaxP: 1
+  dSpawn:
+    ==: Vector
+    x: 80.0920788985587
+    y: 67.0
+    z: 326.58732855684315
+ZeusTactical:
+  Insertions:
