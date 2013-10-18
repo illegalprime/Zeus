@@ -1,5 +1,6 @@
 package net.illegalprime.zeus;
 
+import net.illegalprime.zeus.checkpoints.ZeusCheckpoints;
 import net.illegalprime.zeus.jails.ZeusJailManager;
 import net.illegalprime.zeus.jails.ZeusJailRunnable;
 import net.illegalprime.zeus.runnables.ZeusAutosaveRunnable;
@@ -71,6 +72,7 @@ public final class Zeus extends JavaPlugin {
 	
 	protected ZeusCommandExecutor commEXE;
 	protected ZeusJailManager     jailMan;
+	private   ZeusCheckpoints     checkMan;
 	public    ZeusJailRunnable    jailTick;
 	protected ZeusWarpManager     warpMan;
 	protected TacticalInsertion   tactical;
@@ -99,6 +101,7 @@ public final class Zeus extends JavaPlugin {
 		this.autosaveTime = this.getConfig().getInt("Autosave.time", 120);
 		this.warpMan = new ZeusWarpManager();
 		this.tactical = new TacticalInsertion(this);
+		this.checkMan = new ZeusCheckpoints(this);
 		
 		if (this.autosaveActive) {
 			this.autosaveID = this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ZeusAutosaveRunnable(this), 200L, this.autosaveTime*1200L);
@@ -121,9 +124,12 @@ public final class Zeus extends JavaPlugin {
 		getCommand("goto").setExecutor(commEXE);
 		getCommand("tactical").setExecutor(commEXE);
 		getCommand("book").setExecutor(commEXE);
+		getCommand("checkpoint").setExecutor(checkMan);
+		getCommand("giveup").setExecutor(checkMan);
 		getLogger().info("Zeus Plugin Loaded!");
 		
 		getServer().getPluginManager().registerEvents(new ZeusEventHandler(this), this);
+		getServer().getPluginManager().registerEvents(checkMan, this);
 	}
 	
 	public void cancelAutosave() {
@@ -155,6 +161,7 @@ public final class Zeus extends JavaPlugin {
 		this.getConfig().set("Autosave.time", this.autosaveTime);
 		jailMan.saveDATA();
 		tactical.saveDATA();
+		checkMan.saveDATA();
 		this.saveConfig();
 		getLogger().info("Zeus Data Saved!");
 	}

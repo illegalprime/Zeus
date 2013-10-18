@@ -1,6 +1,6 @@
 name: Zeus
 main: net.illegalprime.zeus.Zeus
-version: 2.0.0
+version: 2.2.9
 commands:
    zeus:
       description: Strike location with lightning.
@@ -46,4 +46,14 @@ commands:
       description: Run the command written in the book in your hand.
       usage: /book
       permission: zeus.book
+      permission-message: You don't have permission to use [ <permission> ].
+   checkpoint:
+      description: Manage player checkpoints.
+      usage: /checkpoint [set|unset] <region_id> (purge)
+      permission: zeus.checkpoint
+      permission-message: You don't have permission to use [ <permission> ].
+   giveup:
+      description: Kills players sending them back to default spawn.
+      usage: /giveup
+      permission: zeus.giveup
       permission-message: You don't have permission to use [ <permission> ].

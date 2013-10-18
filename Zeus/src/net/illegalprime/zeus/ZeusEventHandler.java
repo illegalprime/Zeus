@@ -215,6 +215,7 @@ public class ZeusEventHandler implements Listener {
 		// Check if new sign pertains to plugin & if the second line contains
 		// anything.
 		String signLine = evt.getLine(0);
+		try {
 		if ((!plugin.jailMan.isJailSign(signLine)
 				&& !plugin.isCommBlock(signLine.substring(0, 5))
 				&& !plugin.isUnlimitedSign(signLine)
@@ -222,6 +223,7 @@ public class ZeusEventHandler implements Listener {
 				|| evt.getLine(1) == null
 				|| evt.getLine(1) == "")
 			return;
+		} catch (IndexOutOfBoundsException error) {}
 
 		if (!evt.getPlayer().isOp()) {
 			evt.getPlayer().sendMessage(
@@ -350,9 +352,10 @@ public class ZeusEventHandler implements Listener {
 		if (!(evt.getBlock().getState() instanceof Sign))
 			return;
 		Sign siq = (Sign) evt.getBlock().getState();
-		if (!plugin.isCommBlock(siq.getLine(0).substring(0, 5))
-				|| plugin.isSenderPlayer(siq.getLine(0).substring(0, 5)))
-			return;
+		try {
+			if (!plugin.isCommBlock(siq.getLine(0).substring(0, 5)) || plugin.isSenderPlayer(siq.getLine(0).substring(0, 5)))
+				return;
+		} catch (IndexOutOfBoundsException error) {}
 		
 		if (evt.getBlock().isBlockIndirectlyPowered()
 				|| evt.getBlock().isBlockPowered()) {
