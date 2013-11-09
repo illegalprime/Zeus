@@ -84,10 +84,21 @@ public class ZeusCheckpoints implements CommandExecutor, Listener {
 			if (args_len >= 2) {
 				if (args[0].equals("set")) {
 					if (regionExists(args[1])) {
-						if (args_len == 3 && args[2].equals("purge")) {
-							addRegion(args[1], new Location(((Player) sender).getLocation(), Location.PURGE_REGION));
+						
+						if (args_len == 3) {
 							
-							sender.sendMessage(ChatColor.GREEN + "[Checkpoints] Checkpoints of player will be lost upon entering region: '" + args[1] + "'");
+							if (args[2].equals("purge")) {
+								addRegion(args[1], new Location(((Player) sender).getLocation(), Location.PURGE_REGION));
+								sender.sendMessage(ChatColor.GREEN + "[Checkpoints] Checkpoints of player will be lost upon entering region: '" + args[1] + "'");
+							}
+							else if (args[2].equals("qwarp")) {
+								addRegion(args[1], new Location(((Player) sender).getLocation(), Location.QUIET_WARP));
+								sender.sendMessage(ChatColor.GREEN + "[Checkpoints] A player will warp quietly to the Checkpoint once he enters.");
+							}
+							else {
+								sender.sendMessage(ChatColor.RED + "[Checkpoints] Not recognized.. Options: 'purge' or 'qwarp'");
+							}
+							
 						}
 						else {
 							addRegion(args[1], new Location(((Player) sender).getLocation(), Location.CHECKPOINT));
@@ -123,12 +134,19 @@ public class ZeusCheckpoints implements CommandExecutor, Listener {
 		if (Regions.containsKey(event.getRegion().getId())) {
 			Location checkpoint = Regions.get(event.getRegion().getId());
 			
-			if (checkpoint.tag == Location.PURGE_REGION) {
-				clearCheck(event.getPlayer().getName());
-			}
-			else {
-				setCheck(event.getPlayer().getName(), checkpoint);
-			}
+ 			switch (checkpoint.tag) {
+ 				case Location.CHECKPOINT:
+ 					setCheck(event.getPlayer().getName(), checkpoint);
+ 					break;
+ 				case Location.PURGE_REGION:
+ 					clearCheck(event.getPlayer().getName());
+					break;
+				case Location.QUIET_WARP:
+					event.getPlayer().teleport(checkpoint);
+					break;
+				default:
+					setCheck(event.getPlayer().getName(), checkpoint);
+ 			}
 		}
 	}
 	
@@ -189,6 +207,7 @@ public class ZeusCheckpoints implements CommandExecutor, Listener {
 		public int tag;
 		public static final int CHECKPOINT   = 0;
 		public static final int PURGE_REGION = 1;
+		public static final int QUIET_WARP   = 2;
 		
 		public Location(org.bukkit.Location location, int tag) {
 			super(location.getWorld(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
